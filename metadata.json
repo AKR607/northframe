@@ -1,0 +1,8 @@
+{
+  "name": "Luxury Editing Studio",
+  "description": "Premium short-form video editing studio portfolio for high-ticket clients, business coaches, and personal brands.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
