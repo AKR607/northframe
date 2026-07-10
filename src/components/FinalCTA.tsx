@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { CONTACT_EMAIL } from '../constants';
 
 export function FinalCTA() {
   return (
@@ -26,7 +27,7 @@ export function FinalCTA() {
           </div>
 
           <a
-            href="mailto:contact@example.com"
+            href={`mailto:${CONTACT_EMAIL}`}
             className="inline-flex items-center justify-center px-12 py-5 rounded-2xl bg-brand-accent text-brand-primary font-bold hover:opacity-95 hover:-translate-y-1 active:scale-[0.98] shadow-[0_0_30px_rgba(212,175,55,0.2)] hover:shadow-[0_15px_40px_rgba(212,175,55,0.35)] transition-all duration-300 group text-xl"
           >
             Book Discovery Call

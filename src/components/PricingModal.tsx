@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, ArrowRight } from 'lucide-react';
+import { CONTACT_EMAIL } from '../constants';
 
 interface Plan {
   name: string;
@@ -201,17 +202,18 @@ export function PricingModal({ isOpen, onClose, selectedPlan, volume }: PricingM
                 onSubmit={handleSubmit}
                 className="space-y-6 pb-4"
               >
-                <div className="text-center mb-8">
-                  <h4 className="text-2xl font-bold text-brand-text mb-3">Your Discovery Call is a free strategy session.</h4>
-                  <p className="text-brand-text-muted text-sm sm:text-base mb-6 max-w-lg mx-auto leading-relaxed">
-                    We'll understand your goals, recommend the right editing system, and answer every question.
+                <div className="text-center mb-6">
+                  <h4 className="text-2xl font-bold text-brand-text mb-2">You're almost done.</h4>
+                  <p className="text-brand-text-muted text-sm sm:text-base mb-6">
+                    Complete this short form to book your free Discovery Call.
                   </p>
                   
-                  <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 text-sm text-brand-success font-medium mb-2">
-                     <span className="flex items-center justify-center gap-2"><Check className="w-4 h-4"/> No payment.</span>
-                     <span className="flex items-center justify-center gap-2"><Check className="w-4 h-4"/> No obligation.</span>
-                     <span className="flex items-center justify-center gap-2"><Check className="w-4 h-4"/> No pressure.</span>
+                  <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-6 text-xs sm:text-sm text-brand-success font-medium mb-6">
+                     <span className="flex items-center justify-center gap-1.5"><Check className="w-4 h-4"/> No payment today</span>
+                     <span className="flex items-center justify-center gap-1.5"><Check className="w-4 h-4"/> No automatic subscription</span>
+                     <span className="flex items-center justify-center gap-1.5"><Check className="w-4 h-4"/> Free Discovery Call first</span>
                   </div>
+                  <p className="text-brand-text-muted text-xs sm:text-sm">Final pricing is confirmed after discussion.</p>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div className="space-y-2">
@@ -236,7 +238,7 @@ export function PricingModal({ isOpen, onClose, selectedPlan, volume }: PricingM
 
                 <div className="space-y-2">
                   <label className="block text-sm font-medium text-brand-text-muted">Email Address</label>
-                  <input required type="email" className="w-full p-4 rounded-xl bg-brand-secondary border border-brand-border text-brand-text focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors" placeholder="john@company.com" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
+                  <input required type="email" className="w-full p-4 rounded-xl bg-brand-secondary border border-brand-border text-brand-text focus:border-brand-accent focus:ring-1 focus:ring-brand-accent transition-colors" placeholder={CONTACT_EMAIL} value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} />
                 </div>
                 
                 {/* Hidden submit button to trigger form validation on Enter or custom button click */}

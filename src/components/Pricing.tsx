@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, Minus, Plus } from 'lucide-react';
 import { PricingModal } from './PricingModal';
-import { PricingComparison } from './PricingComparison';
-import { PricingFAQ } from './PricingFAQ';
 
 const plans = [
   {
@@ -11,38 +9,30 @@ const plans = [
     subtitle: 'Professional Editing',
     label: 'FOUNDATION WORKFLOW',
     basePrice: 99,
-    description: 'A streamlined editing workflow for creators building a consistent publishing system.',
-    whoItsFor: 'Creators beginning a consistent publishing workflow.',
+    description: 'A streamlined production workflow for clean, professional video editing.',
+    whoItsFor: 'Creators and founders establishing their video presence.',
     features: [
-      'Professional Story Editing',
-      'Dynamic Captions',
-      'Color Grading',
-      'Audio Enhancement',
-      'Basic Motion Graphics',
-      'Licensed Music',
-      '1 Revision',
-      'Dedicated Editor',
-      '48-Hour Turnaround'
+      'Story-first editing',
+      'Basic motion graphics',
+      'Color correction',
+      'Audio leveling',
+      '1 Revision pass'
     ],
     popular: false,
   },
   {
     name: 'Scale™',
     subtitle: 'Growth Editing',
-    label: 'MOST POPULAR',
+    label: 'BALANCED WORKFLOW',
     basePrice: 149,
-    description: 'An elevated editing system designed for brands focused on audience growth and consistency.',
-    whoItsFor: 'Brands and creators actively scaling content.',
+    description: 'An elevated editing framework designed to maximize retention and audience growth.',
+    whoItsFor: 'Brands and creators actively scaling their content output.',
     features: [
-      'Everything in Launch +',
-      'Advanced Motion Graphics',
-      'Hook Optimization',
-      'Premium B-roll Research',
-      'Dynamic Animated Captions',
-      'Brand Style Consistency',
-      'Priority Delivery',
-      '2 Revisions',
-      'Dedicated Monthly Workflow'
+      'Everything in Launch',
+      'Advanced motion graphics',
+      'B-roll & asset sourcing',
+      'Dynamic subtitles',
+      '2 Revision passes'
     ],
     popular: true,
   },
@@ -51,18 +41,14 @@ const plans = [
     subtitle: 'Elite Editing',
     label: 'COMPREHENSIVE WORKFLOW',
     basePrice: 249,
-    description: 'A premium creative partnership built for brands demanding cinematic quality and maximum production value.',
-    whoItsFor: 'Established businesses requiring premium creative execution.',
+    description: 'A comprehensive creative partnership delivering our highest tier of production value.',
+    whoItsFor: 'Established businesses demanding cinematic quality and dedicated resources.',
     features: [
-      'Everything in Scale +',
-      'Cinematic Editing',
-      'Custom Animations',
-      'Premium Sound Design',
-      'Thumbnail Design',
-      'Creative Strategy Support',
-      'Dedicated Project Manager',
-      'Unlimited Minor Revisions',
-      'Fastest Turnaround'
+      'Everything in Scale',
+      'Custom animations',
+      'Premium sound design',
+      'Thumbnail design included',
+      'Unlimited revisions'
     ],
     popular: false,
   },
@@ -148,26 +134,37 @@ export function Pricing() {
     return 0; // Launch
   };
 
+  const recommendedIndex = getRecommendedPlanIndex();
+  const highlightedIndex = selectedPlanIndex !== null ? selectedPlanIndex : recommendedIndex;
 
   const getHelperBannerText = (vol: number) => {
-    let plan = "Launch";
-    let desc = "This volume allows for a streamlined production workflow, keeping the process simple while leaving room to scale.";
+    const planIndex = highlightedIndex !== null ? highlightedIndex : recommendedIndex;
+    const planName = planIndex !== null ? plans[planIndex].name.replace('™', '') : 'Launch';
     
-    if (vol >= 30) {
-      plan = "Authority";
-      desc = "Higher publishing frequencies benefit from a more structured editing workflow and dedicated creative resources.";
+    let message = "";
+    if (vol >= 50) {
+      message = "For teams and businesses producing content at scale.";
+    } else if (vol >= 40) {
+      message = "Designed for high-volume publishing.";
+    } else if (vol >= 30) {
+      message = "Built for creators increasing production.";
+    } else if (vol >= 20) {
+      message = "Balanced for creators publishing consistently.";
     } else if (vol >= 10) {
-      plan = "Scale";
-      desc = "This volume requires a balanced production workflow designed to support consistent, reliable content creation.";
+      message = "A steady publishing rhythm with room to grow.";
+    } else {
+      message = "Creators beginning their content journey often start here.";
     }
 
-    return <>
-      <span className="block mb-2 text-brand-text font-medium text-lg">For a publishing rhythm of {vol} Shorts each month, <strong className="text-brand-accent">{plan}</strong> is a strong fit.</span>
-      <span className="text-brand-text-muted text-base block">{desc}</span>
-    </>;
+    return (
+      <>
+        <span className="block mb-2 text-brand-text font-medium text-lg">
+          Based on {vol} Shorts per month, many creators explore the <strong className="text-brand-accent">{planName}</strong> workflow.
+        </span>
+        <span className="text-brand-text-muted text-base block">{message}</span>
+      </>
+    );
   };
-
-  const recommendedIndex = getRecommendedPlanIndex();
 
   const handlePlanClick = (index: number) => {
     setSelectedPlanIndex(index);
@@ -177,6 +174,11 @@ export function Pricing() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  // Reset explicit selection when volume changes to maintain matching recommendation
+  useEffect(() => {
+    setSelectedPlanIndex(null);
+  }, [volume]);
 
   return (
     <section id="pricing" className="py-32 bg-brand-secondary border-y border-brand-border relative">
@@ -188,13 +190,65 @@ export function Pricing() {
           </p>
         </div>
 
+        {/* How It Works Card */}
+        <div className="max-w-2xl mx-auto mb-16 bg-brand-primary/50 border border-brand-border rounded-[24px] p-6 sm:p-8 shadow-lg">
+          <h4 className="text-lg font-bold text-brand-text mb-4 flex items-center gap-2">
+            <span className="w-6 h-6 rounded-full bg-brand-accent/20 text-brand-accent flex items-center justify-center text-sm">?</span>
+            How It Works
+          </h4>
+          <ol className="space-y-3 text-sm sm:text-base text-brand-text-muted">
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-brand-text">1.</span>
+              <span>Choose how many Shorts you need each month.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-brand-text">2.</span>
+              <span>Select a package that fits your workflow.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-brand-text">3.</span>
+              <span>Any eligible volume savings are applied automatically.</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="font-bold text-brand-text">4.</span>
+              <span>Book your free Discovery Call.</span>
+            </li>
+          </ol>
+        </div>
+
+        {/* Volume Savings Table */}
+        <div className="max-w-2xl mx-auto mb-16 bg-brand-primary/50 border border-brand-border rounded-[24px] p-6 sm:p-8 shadow-lg">
+          <div className="text-center mb-6">
+            <h4 className="text-xl font-bold text-brand-text mb-2">Volume Savings</h4>
+            <p className="text-brand-text-muted text-sm sm:text-base">The more Shorts you create each month, the more you save.</p>
+          </div>
+          <div className="overflow-x-auto rounded-xl border border-brand-border/50 mb-4 bg-brand-secondary/30">
+            <table className="w-full text-left text-sm sm:text-base">
+              <thead className="bg-brand-secondary/50 border-b border-brand-border/50 text-brand-text-muted">
+                <tr>
+                  <th className="px-4 py-3 font-medium">Monthly Shorts</th>
+                  <th className="px-4 py-3 font-medium text-right">Volume Savings</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-brand-border/50 text-brand-text">
+                <tr><td className="px-4 py-3">1–5</td><td className="px-4 py-3 text-right">Standard Price</td></tr>
+                <tr><td className="px-4 py-3">6–10</td><td className="px-4 py-3 text-right font-medium text-brand-success">3% OFF</td></tr>
+                <tr><td className="px-4 py-3">11–20</td><td className="px-4 py-3 text-right font-medium text-brand-success">5% OFF</td></tr>
+                <tr><td className="px-4 py-3">21–30</td><td className="px-4 py-3 text-right font-medium text-brand-success">7% OFF</td></tr>
+                <tr><td className="px-4 py-3">31–40</td><td className="px-4 py-3 text-right font-medium text-brand-success">9% OFF</td></tr>
+                <tr><td className="px-4 py-3">41–50</td><td className="px-4 py-3 text-right font-medium text-brand-success">10% OFF</td></tr>
+                <tr><td className="px-4 py-3">50+</td><td className="px-4 py-3 text-right text-brand-accent">Custom Enterprise Quote</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-center text-sm text-brand-text-muted">Volume Savings are applied automatically based on your selected monthly content volume.</p>
+        </div>
+
         {/* Volume Selector */}
         <div className="mb-20 bg-brand-primary border border-brand-border rounded-[32px] p-8 md:p-12 text-center max-w-3xl mx-auto relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-border to-transparent" />
           <h3 className="text-2xl md:text-3xl font-bold mb-4 text-brand-text">About how many Shorts do you usually publish each month?</h3>
-          <p className="text-brand-text-muted text-base mb-10">
-            Higher monthly content volume automatically unlocks better pricing.
-          </p>
+          <div className="mb-10" />
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
             {[
@@ -224,9 +278,9 @@ export function Pricing() {
           </div>
 
           <div className="mt-8 pt-8 border-t border-brand-border/50">
-            <span className="text-xs font-bold text-brand-text-muted uppercase tracking-widest block mb-6">OR adjust manually</span>
+            <span className="text-sm font-semibold text-brand-text-muted uppercase tracking-wider block mb-4">OR adjust manually</span>
             <div className="flex justify-center">
-              <div className="inline-flex items-center p-2.5 bg-brand-primary/50 rounded-2xl border border-brand-border/60 shadow-inner max-w-full overflow-hidden">
+              <div className="inline-flex items-center p-2 bg-brand-card rounded-2xl border border-brand-border shadow-inner max-w-full overflow-hidden">
                 <button
                   onMouseDown={() => startContinuous('dec')}
                   onMouseUp={stopContinuous}
@@ -244,7 +298,7 @@ export function Pricing() {
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
-                    
+                    placeholder="0"
                     value={volume === 51 ? '50+' : volume}
                     onChange={handleInputChange}
                     onBlur={handleInputBlur}
@@ -271,52 +325,32 @@ export function Pricing() {
 
 
         {currentVol > 0 && currentVol <= 50 && (
-          <div className="max-w-3xl mx-auto mb-20 text-center">
-            <div className="inline-block bg-brand-primary/30 border border-brand-border/60 shadow-xl rounded-[24px] p-8 sm:px-12 backdrop-blur-sm">
+          <div className="max-w-3xl mx-auto mb-16 text-center">
+            <div className="inline-block bg-brand-accent/5 border border-brand-accent/20 rounded-2xl p-6 sm:px-10">
               {getHelperBannerText(currentVol)}
-              <div className="mt-6 pt-6 border-t border-brand-border/40 space-y-5">
-                <p className="text-brand-text-muted text-sm font-medium">
-                  You can choose any package below. The suggestion is based only on your estimated monthly publishing volume.
-                </p>
+              <div className="mt-4 pt-4 border-t border-brand-accent/10">
                 <button 
                   onClick={() => {
-                    const planCards = plansContainerRef.current?.children;
-                    if (planCards && recommendedIndex !== null && planCards[recommendedIndex]) {
-                      const targetCard = planCards[recommendedIndex] as HTMLElement;
-                      const rect = targetCard.getBoundingClientRect();
-                      const isFullyVisible = (
-                        rect.top >= 0 &&
-                        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
-                      );
-                      
-                      if (!isFullyVisible) {
-                        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+                    setSelectedPlanIndex(null); // Clear manual selection to re-highlight the matched package
+                    setTimeout(() => {
+                      const planCards = plansContainerRef.current?.children;
+                      const rIndex = getRecommendedPlanIndex();
+                      if (planCards && rIndex !== null && planCards[rIndex]) {
+                        (planCards[rIndex] as HTMLElement).scrollIntoView({ behavior: 'smooth', block: 'center' });
                       }
-                    }
+                    }, 50);
                   }}
-                  className="inline-flex items-center gap-2 text-sm text-brand-accent hover:text-brand-accent/80 font-bold tracking-wide transition-colors"
+                  className="inline-flex items-center gap-2 text-sm text-brand-accent hover:text-brand-accent/80 font-semibold transition-colors"
                 >
-                  View Suggested Plan ↓
+                  View Matching Package ↓
                 </button>
               </div>
             </div>
           </div>
         )}
-            <div className="max-w-6xl mx-auto mb-20 text-center px-4">
-            <h4 className="text-xl font-medium text-brand-text-muted mb-8 tracking-wide uppercase text-sm">Every plan includes</h4>
-            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-              {['Dedicated Editor', '48-Hour Turnaround', 'Flexible Monthly Scaling', 'Secure File Delivery', 'Commercial Usage Rights', 'Discovery Call Before Payment'].map((trustItem, i) => (
-                <div key={i} className="flex items-center gap-2 text-brand-text text-sm md:text-base font-semibold">
-                  <Check className="w-5 h-5 text-brand-accent shrink-0" />
-                  <span>{trustItem}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          <div ref={plansContainerRef} className="grid lg:grid-cols-3 gap-8 items-stretch max-w-7xl mx-auto mb-20">
+            <div ref={plansContainerRef} className="grid lg:grid-cols-3 gap-8 items-stretch max-w-7xl mx-auto mb-20">
               {plans.map((plan, index) => {
-                const isRecommended = recommendedIndex === index;
+                const isHighlighted = highlightedIndex === index;
 
                 return (
                   <motion.div
@@ -325,162 +359,131 @@ export function Pricing() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-50px' }}
                     transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    className={`relative flex flex-col p-8 md:p-10 rounded-[32px] transition-all duration-500 group cursor-pointer ${
-                      isRecommended
-                        ? 'bg-gradient-to-b from-brand-primary to-brand-primary/90 border border-brand-accent/50 shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(212,175,55,0.15)] z-10 scale-[1.02] md:scale-[1.04]'
-                        : 'bg-brand-primary/20 border border-brand-border/40 hover:border-brand-border/80 hover:bg-brand-primary/40 shadow-xl'
+                    className={`relative flex flex-col p-8 md:p-10 rounded-[32px] border transition-all duration-300 group ${
+                      isHighlighted
+                        ? 'bg-brand-primary border-brand-accent shadow-[0_0_40px_rgba(212,175,55,0.15)] z-10'
+                        : 'bg-brand-primary/50 border-brand-border hover:border-brand-border/80 hover:bg-brand-primary'
                     }`}
                   >
-                    {isRecommended && (
-                      <div className="absolute inset-0 rounded-[32px] bg-gradient-to-b from-brand-accent/5 to-transparent pointer-events-none" />
-                    )}
 
 
                     <div className="mb-8 border-b border-brand-border/50 pb-8 flex-grow">
-                      {plan.popular && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-brand-accent/20 to-brand-accent/5 border border-brand-accent/30 rounded-full text-xs font-bold text-brand-accent mb-6 uppercase tracking-widest shadow-[0_0_15px_rgba(212,175,55,0.2)]">
-                          <div className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
+                      {!isHighlighted && plan.label && (
+                        <div className="inline-block px-3 py-1 bg-brand-secondary border border-brand-border rounded-full text-xs font-medium text-brand-text-muted mb-4 uppercase tracking-wider">
                           {plan.label}
                         </div>
                       )}
-                      <h3 className={`text-3xl font-extrabold mb-1 tracking-tight ${isRecommended ? 'text-brand-text' : 'text-brand-text/90'}`}>{plan.name}</h3>
-                      <p className="text-brand-accent text-sm font-bold uppercase tracking-widest mb-6">
+                      <h3 className="text-2xl font-bold mb-1 text-brand-text">{plan.name}</h3>
+                      <p className="text-brand-accent text-sm font-semibold uppercase tracking-wide mb-4">
                         {plan.subtitle}
                       </p>
-                      <p className="text-sm md:text-base text-brand-text-muted leading-relaxed mb-6 font-medium">
+                      <p className="text-base text-brand-text-muted leading-relaxed mb-4">
                         {plan.description}
                       </p>
                       {plan.whoItsFor && (
-                         <div className="bg-brand-card/50 p-4 rounded-2xl border border-brand-border/30 text-sm text-brand-text/80 leading-relaxed font-medium">
-                           <span className="font-bold text-brand-text block mb-1">Who it's for:</span>
+                         <div className="bg-brand-secondary p-3 rounded-xl border border-brand-border/50 text-sm text-brand-text">
+                           <span className="font-semibold block mb-1">Who it's for:</span>
                            {plan.whoItsFor}
                          </div>
                       )}
 
-                      <div className="mt-8 pt-8 border-t border-brand-border/30 flex flex-col">
-                        <span className="text-xs font-bold text-brand-text-muted mb-2 uppercase tracking-widest">Starting at</span>
-                        <div className="flex items-baseline text-brand-text mb-4">
-                          <span className="text-5xl font-extrabold tracking-tighter">${plan.basePrice}</span>
+                      <div className="mt-6 flex flex-col">
+                        <span className="text-sm font-medium text-brand-text-muted mb-1 block">Starting at</span>
+                        <div className="flex items-baseline text-brand-text">
+                          <span className="text-4xl font-extrabold tracking-tight">${plan.basePrice}</span>
                           <span className="text-brand-text-muted ml-2 font-medium text-lg">/ Short</span>
                         </div>
-                        <div className="flex flex-col gap-2 text-xs font-medium text-brand-text-muted/80">
-                          <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-brand-accent/60"/>Included in Monthly Content System</span>
-                          <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-brand-accent/60"/>No upfront payment</span>
-                          <span className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-brand-accent/60"/>Discovery Call first</span>
-                        </div>
                       </div>
 
-                      <div className="mt-8 pt-8 border-t border-brand-border/30">
-                        <span className="text-xs font-bold text-brand-text-muted mb-6 block uppercase tracking-widest">What's Included</span>
-                        <ul className="space-y-4">
-                          {plan.features.map((feature, i) => (
-                            <li key={i} className="flex items-start group/feature">
-                              <Check
-                                className={`w-5 h-5 mr-3 shrink-0 mt-0.5 transition-colors ${
-                                  isRecommended ? 'text-brand-accent' : 'text-brand-text-muted group-hover/feature:text-brand-accent/70'
-                                }`}
-                              />
-                              <span className={`text-sm md:text-base font-medium leading-snug ${isRecommended ? 'text-brand-text' : 'text-brand-text/70'}`}>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <ul className="mt-8 space-y-4">
+                        {plan.features.map((feature, i) => (
+                          <li key={i} className="flex items-start">
+                            <Check
+                              className={`w-5 h-5 mr-3 shrink-0 mt-0.5 ${
+                                isHighlighted ? 'text-brand-accent' : 'text-brand-text-muted'
+                              }`}
+                            />
+                            <span className={`text-base leading-relaxed ${isHighlighted ? 'text-brand-text' : 'text-brand-text-muted'}`}>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
 
-                    <div className="mt-auto pt-10">
-                      <button
-                        className={`w-full py-4 rounded-xl font-bold text-base md:text-lg text-center transition-all duration-300 active:scale-[0.98] ${
-                          isRecommended
-                            ? 'bg-brand-accent text-brand-primary hover:opacity-90 shadow-[0_10px_20px_rgba(212,175,55,0.2)] hover:shadow-[0_15px_30px_rgba(212,175,55,0.3)]'
-                            : 'bg-brand-card border border-brand-border/60 text-brand-text hover:border-brand-accent/50 hover:bg-brand-accent/5'
-                        }`}
-                        onClick={() => handlePlanClick(index)}
-                      >
-                        Book Discovery Call
-                      </button>
-                      <div className="mt-4 flex flex-col gap-1 text-xs text-brand-text-muted/70 text-center font-medium">
-                        <span>No payment today</span>
-                        <span>Free strategy session</span>
-                        <span>No obligation</span>
-                      </div>
-                    </div>
+                    <button
+                      className={`w-full py-4 rounded-2xl font-bold text-lg text-center transition-all duration-300 active:scale-[0.98] mt-auto ${
+                        selectedPlanIndex === index
+                          ? 'bg-brand-accent text-brand-primary hover:opacity-95 shadow-[0_0_30px_rgba(212,175,55,0.15)]'
+                          : 'bg-brand-secondary border border-brand-border text-brand-text hover:border-brand-accent hover:text-brand-accent'
+                      }`}
+                      onClick={() => handlePlanClick(index)}
+                    >
+                      Explore {plan.name.replace('™', '')}
+                    </button>
                   </motion.div>
                 );
               })}
             </div>
 
-                        
-      
-      <PricingComparison />
-      <PricingFAQ />
-            <div className="max-w-4xl mx-auto mt-32 mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative rounded-[32px] overflow-hidden p-12 md:p-20 text-center"
-        >
-          <div className="absolute inset-0 bg-brand-primary border border-brand-border/50 rounded-[32px] pointer-events-none"></div>
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-accent/50 to-transparent pointer-events-none"></div>
-          
-          <div className="relative z-10">
-            <h3 className="text-3xl md:text-5xl font-extrabold text-brand-text mb-6 tracking-tight leading-tight max-w-3xl mx-auto">
-              Ready to Build Content That Actually Grows Your Brand?
-            </h3>
-            <p className="text-xl md:text-2xl text-brand-text-muted mb-10 font-medium max-w-2xl mx-auto leading-relaxed">
-              Let's discuss your goals and build the right editing system for your business.
-            </p>
-            
-            <div className="flex flex-col items-center justify-center">
-              <button
-                onClick={() => { setSelectedPlanIndex(0); setIsModalOpen(true); }}
-                className="inline-flex items-center justify-center px-10 py-5 md:px-14 md:py-6 rounded-xl bg-brand-accent text-brand-primary font-bold hover:opacity-95 shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] transition-all duration-300 text-lg w-full sm:w-auto mb-6"
-              >
-                Book Discovery Call
-              </button>
-              
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-sm font-medium text-brand-text-muted">
-                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-brand-success" /> No payment today</span>
-                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-brand-success" /> Free strategy session</span>
-                <span className="flex items-center gap-2"><Check className="w-4 h-4 text-brand-success" /> No obligation</span>
+            <div className="max-w-4xl mx-auto mb-20 text-center">
+              <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 mb-10">
+                <div className="flex items-center gap-2 text-brand-text-muted text-sm font-medium">
+                  <Check className="w-4 h-4 text-brand-success shrink-0" />
+                  <span>Discovery Call first</span>
+                </div>
+                <div className="flex items-center gap-2 text-brand-text-muted text-sm font-medium">
+                  <Check className="w-4 h-4 text-brand-success shrink-0" />
+                  <span>No payment before we talk</span>
+                </div>
+                <div className="flex items-center gap-2 text-brand-text-muted text-sm font-medium">
+                  <Check className="w-4 h-4 text-brand-success shrink-0" />
+                  <span>Flexible monthly plans</span>
+                </div>
+                <div className="flex items-center gap-2 text-brand-text-muted text-sm font-medium">
+                  <Check className="w-4 h-4 text-brand-success shrink-0" />
+                  <span>Typical onboarding within 48 hours</span>
+                </div>
+              </div>
+
+              <div className="bg-brand-secondary/50 border border-brand-border rounded-[24px] p-6 sm:p-8">
+                <h4 className="text-xl font-bold text-brand-text mb-3">Not sure which package fits best?</h4>
+                <p className="text-brand-text-muted text-base mb-4">
+                  Every creator has different goals, budgets and publishing schedules.
+                </p>
+                <p className="text-brand-text-muted text-base">
+                  During your Discovery Call we'll help you choose the option that makes the most sense for your workflow. 
+                  There's no obligation and no payment before we speak.
+                </p>
               </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
 
-      {currentVol > 50 && (
+                        {currentVol > 50 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-4xl mx-auto p-12 md:p-20 rounded-[32px] bg-gradient-to-b from-brand-primary to-brand-primary/90 border border-brand-accent/40 shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_40px_rgba(212,175,55,0.15)] text-center relative overflow-hidden"
+            className="max-w-4xl mx-auto p-10 md:p-16 rounded-[32px] bg-brand-card border border-brand-accent/30 shadow-[0_0_50px_rgba(212,175,55,0.1)] text-center relative overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-accent/5 to-transparent pointer-events-none" />
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-accent to-transparent" />
-            
-            <div className="relative z-10">
-              <h3 className="text-4xl md:text-5xl font-extrabold text-brand-text mb-4 tracking-tight">Enterprise System</h3>
-              <p className="text-xl md:text-2xl text-brand-text-muted mb-2 font-medium">Need more than 50 Shorts per month?</p>
-              <p className="text-base md:text-lg text-brand-text-muted/80 mb-12">We'll build a custom production workflow tailored to your business.</p>
-  
-              <div className="flex flex-wrap justify-center gap-3 md:gap-5 mb-16 max-w-3xl mx-auto">
-                {['Dedicated Production Team', 'Priority Queue', 'Custom Turnaround', 'Slack Communication', 'Custom Pricing'].map(
-                  (feature) => (
-                    <div key={feature} className="flex items-center gap-2.5 bg-brand-card/50 px-5 py-3 rounded-full border border-brand-border/60 shadow-sm">
-                      <Check className="w-5 h-5 text-brand-accent shrink-0" />
-                      <span className="text-sm font-bold text-brand-text/90 tracking-wide">{feature}</span>
-                    </div>
-                  )
-                )}
-              </div>
-  
-              <a
-                href="#contact"
-                className="inline-flex px-10 md:px-14 py-5 md:py-6 rounded-xl bg-brand-accent text-brand-primary font-bold hover:opacity-90 shadow-[0_10px_20px_rgba(212,175,55,0.2)] hover:shadow-[0_15px_30px_rgba(212,175,55,0.3)] transition-all duration-300 text-lg md:text-xl active:scale-[0.98]"
-              >
-                Request Enterprise Quote
-              </a>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-brand-accent to-transparent" />
+            <h3 className="text-3xl md:text-5xl font-extrabold text-brand-text mb-6">Enterprise Content System</h3>
+            <p className="text-xl md:text-2xl text-brand-text-muted mb-2 font-medium">Need more than 50 Shorts per month?</p>
+            <p className="text-lg text-brand-text-muted mb-12">We'll build a custom workflow for your business.</p>
+
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-16 max-w-3xl mx-auto">
+              {['Dedicated Editor', 'Priority Queue', 'Custom Turnaround', 'Slack/WhatsApp Communication', 'Custom Pricing'].map(
+                (feature) => (
+                  <div key={feature} className="flex items-center gap-3 bg-brand-primary px-5 py-3 rounded-full border border-brand-border">
+                    <Check className="w-5 h-5 text-brand-accent shrink-0" />
+                    <span className="text-sm font-semibold text-brand-text tracking-wide">{feature}</span>
+                  </div>
+                )
+              )}
             </div>
+
+            <a
+              href="#contact"
+              className="inline-flex px-10 md:px-14 py-5 md:py-6 rounded-2xl bg-brand-accent text-brand-primary font-bold hover:opacity-95 hover:-translate-y-1 active:scale-[0.98] shadow-[0_0_30px_rgba(212,175,55,0.2)] hover:shadow-[0_15px_40px_rgba(212,175,55,0.3)] transition-all duration-300 text-lg md:text-xl"
+            >
+              Request Enterprise Quote
+            </a>
           </motion.div>
             )}
       </div>

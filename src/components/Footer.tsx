@@ -1,3 +1,5 @@
+import { CONTACT_EMAIL } from '../constants';
+
 export function Footer() {
   const year = new Date().getFullYear();
   
@@ -17,7 +19,7 @@ export function Footer() {
         <div className="space-y-4">
           <h4 className="text-sm font-semibold text-brand-text uppercase tracking-wider">Connect</h4>
           <div className="flex flex-col space-y-3 text-sm text-brand-text-muted">
-            <a href="mailto:contact@northframe.com" className="hover:text-brand-accent transition-colors">Email</a>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-brand-accent transition-colors">Email</a>
             <a href="#" className="hover:text-brand-accent transition-colors">Instagram</a>
             <a href="#" className="hover:text-brand-accent transition-colors">LinkedIn</a>
           </div>
