@@ -31,7 +31,7 @@ export function Services() {
   return (
     <section id="services" className="py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-12 gap-16 items-start">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           <div className="lg:col-span-4 space-y-8 sticky top-32">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight">Capabilities</h2>
             <p className="text-brand-text-muted text-lg lg:text-xl leading-[1.8]">

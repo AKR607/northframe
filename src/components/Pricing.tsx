@@ -288,12 +288,12 @@ export function Pricing() {
                   onTouchStart={(e) => { e.preventDefault(); startContinuous('dec'); }}
                   onTouchEnd={(e) => { e.preventDefault(); stopContinuous(); }}
                   disabled={currentVol <= 1 && volume !== ''}
-                  className="w-16 h-16 shrink-0 rounded-xl bg-brand-secondary border border-brand-border flex items-center justify-center hover:border-brand-accent hover:text-brand-accent transition-colors disabled:opacity-50 disabled:hover:border-brand-border disabled:hover:text-brand-text active:scale-95 touch-manipulation select-none"
+                  className="w-12 h-12 sm:w-16 sm:h-16 shrink-0 rounded-xl bg-brand-secondary border border-brand-border flex items-center justify-center hover:border-brand-accent hover:text-brand-accent transition-colors disabled:opacity-50 disabled:hover:border-brand-border disabled:hover:text-brand-text active:scale-95 touch-manipulation select-none"
                   aria-label="Decrease quantity"
                 >
                   <Minus className="w-6 h-6" />
                 </button>
-                <div className="w-64 mx-2 md:mx-4 text-center shrink">
+                <div className="w-32 sm:w-48 md:w-64 mx-2 md:mx-4 text-center shrink">
                   <input
                     type="text"
                     inputMode="numeric"
@@ -313,7 +313,7 @@ export function Pricing() {
                   onTouchStart={(e) => { e.preventDefault(); startContinuous('inc'); }}
                   onTouchEnd={(e) => { e.preventDefault(); stopContinuous(); }}
                   disabled={currentVol >= 51}
-                  className="w-16 h-16 shrink-0 rounded-xl bg-brand-secondary border border-brand-border flex items-center justify-center hover:border-brand-accent hover:text-brand-accent transition-colors disabled:opacity-50 disabled:hover:border-brand-border disabled:hover:text-brand-text active:scale-95 touch-manipulation select-none"
+                  className="w-12 h-12 sm:w-16 sm:h-16 shrink-0 rounded-xl bg-brand-secondary border border-brand-border flex items-center justify-center hover:border-brand-accent hover:text-brand-accent transition-colors disabled:opacity-50 disabled:hover:border-brand-border disabled:hover:text-brand-text active:scale-95 touch-manipulation select-none"
                   aria-label="Increase quantity"
                 >
                   <Plus className="w-6 h-6" />

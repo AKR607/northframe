@@ -66,7 +66,7 @@ export function Process() {
                     whileInView={{ backgroundColor: '#D4AF37', borderColor: '#D4AF37', scale: 1.2, boxShadow: '0 0 20px rgba(212,175,55,0.4)' }}
                     viewport={{ margin: "-30% 0px -30% 0px" }}
                     transition={{ duration: 0.4 }}
-                    className="absolute left-6 md:left-1/2 w-4 h-4 border-2 rounded-full md:-translate-x-1/2 z-10 -translate-x-[7px]" 
+                    className="absolute left-8 md:left-1/2 w-4 h-4 border-2 rounded-full md:-translate-x-1/2 z-10 -translate-x-[7px]" 
                   />
 
                   {/* Connector Line (Desktop) */}

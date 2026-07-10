@@ -48,10 +48,10 @@ export function FAQ() {
                 className="border rounded-[24px] overflow-hidden hover:border-brand-border/80"
               >
                 <button
-                  className="w-full text-left px-8 py-8 flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent group"
+                  className="w-full text-left px-6 sm:px-8 py-6 sm:py-8 flex items-center justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent group"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                 >
-                  <span className="text-xl font-bold text-brand-text pr-8 tracking-tight">{faq.question}</span>
+                  <span className="text-lg sm:text-xl font-bold text-brand-text pr-4 sm:pr-8 tracking-tight">{faq.question}</span>
                   <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
@@ -70,7 +70,7 @@ export function FAQ() {
                       transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                       className="overflow-hidden"
                     >
-                      <div className="px-8 pb-8 text-brand-text-muted text-lg leading-[1.8] max-w-2xl">
+                      <div className="px-6 sm:px-8 pb-6 sm:pb-8 text-brand-text-muted text-base sm:text-lg leading-[1.8] max-w-2xl">
                         {faq.answer}
                       </div>
                     </motion.div>

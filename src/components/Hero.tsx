@@ -12,7 +12,7 @@ export function Hero() {
       />
       <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-brand-text/5 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full grid lg:grid-cols-2 gap-20 items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -24,7 +24,7 @@ export function Hero() {
             <span className="text-brand-text">Trusted by coaches, consultants & founders.</span>
           </div>
 
-          <h1 className="text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight leading-[1.15]">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight leading-[1.15]">
             Premium Short-Form Editing <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-text to-brand-text-muted">That Builds Authority.</span>
           </h1>
 
@@ -77,7 +77,7 @@ export function Hero() {
           className="relative lg:h-[700px] flex items-center justify-center"
         >
           {/* Abstract Portfolio Presentation Mockup */}
-          <div className="relative w-full max-w-md h-[650px] rounded-[40px] bg-brand-secondary border border-brand-border shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden group p-2 flex flex-col ring-1 ring-white/5">
+          <div className="relative w-full max-w-md h-[500px] sm:h-[650px] rounded-[40px] bg-brand-secondary border border-brand-border shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden group p-2 flex flex-col ring-1 ring-white/5 mx-auto">
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-brand-text/5 to-transparent opacity-50" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-brand-primary rounded-b-2xl z-20" />
             

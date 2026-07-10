@@ -17,7 +17,7 @@ export function FinalCTA() {
           className="space-y-12"
         >
           <div className="space-y-6">
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1]">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1]">
               Professional Editing.<br />
               <span className="text-brand-text-muted">Predictable Delivery.</span>
             </h2>
